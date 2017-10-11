@@ -9,6 +9,15 @@ package ru.job4j;
 public class Calculate {
 
 	/**
+	* Метод echo
+	* @param name Ваше имя
+	* @return Конкатенация строки и содержимого переменной name
+	*/
+	public String echo(String name) {
+		return "Echo, echo, echo : " + name;
+	}
+
+	/**
 	* Метод main точка входа в программу при запуске
 	* @param args - массив входных данных 
 	*/
