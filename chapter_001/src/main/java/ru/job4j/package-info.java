@@ -1,5 +1,5 @@
 /**
-* Package for calculate task
+* Package for calculate task.
 *
 * @author Vitaly Kovrov (mailto:virtaly@ya.ru)
 * @version 0.1
