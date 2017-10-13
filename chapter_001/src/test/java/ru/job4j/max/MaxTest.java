@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 public class MaxTest {
 
     /**
-     * Тест для метода max.
+     * Тест для метода max c двумя параметрами.
      * Должен вернуть 5 как маскимальное из чисел 2 и 5.
      */
     @Test
@@ -21,6 +21,18 @@ public class MaxTest {
         Max objectMax = new Max();
         int expected = 5;
         int result = objectMax.max(2, 5);
+        assertThat(result, is(expected));
+    }
+
+    /**
+     * Тест для метода max c тремя параметрами.
+     * Должен вернуть 8 как маскимальное из чисел 2, 4 и 8.
+     */
+    @Test
+    public void whenTwoFourAndEightThenEight() {
+        Max objectMax = new Max();
+        int expected = 8;
+        int result = objectMax.max(2, 4, 8);
         assertThat(result, is(expected));
     }
 }
