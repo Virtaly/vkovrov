@@ -15,8 +15,8 @@ public class SubString {
      * @return true - если подстрока найдена, иначе false.
      */
     public boolean contains(String origin, String sub) {
-        char[] originArr = this.stringToCharArr(origin);
-        char[] subArr = this.stringToCharArr(sub);
+        char[] originArr = origin.toCharArray();
+        char[] subArr = sub.toCharArray();
         boolean isSub = false;
         int i = 0;
         while (!isSub && i < originArr.length - subArr.length) {
@@ -37,18 +37,4 @@ public class SubString {
         }
         return isSub;
     }
-
-    /**
-     * Метод stringToCharArr преобразует строку в массив символов.
-     * @param string строка, которую нужно преобразовать.
-     * @return массив символов из строки, переданной в параметре.
-     */
-    private char[] stringToCharArr(String string) {
-        char[] charArr = new char[string.length()];
-        for (int i = 0; i < string.length(); i++) {
-            charArr[i] = string.charAt(i);
-        }
-        return charArr;
-    }
-
 }
