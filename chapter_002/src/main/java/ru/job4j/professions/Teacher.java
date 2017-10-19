@@ -28,7 +28,7 @@ public class Teacher extends Profession {
      * @param pupil ученик.
      */
     public void callToTheBlackBoard(Pupil pupil) {
-
+        System.out.println("Эй, " + pupil + " быстро к доске, хватит играть в айфон.");
     }
 
     /**
@@ -36,7 +36,11 @@ public class Teacher extends Profession {
      * @param pupilsClass класс учеников.
      */
     public void setHomework(PupilsClass pupilsClass) {
-
+        System.out.println("Итак, " + pupilsClass + ", наш урок подходит к концу ...");
+        System.out.println("И сейчас я задам кучу упражнений на дом, ");
+        System.out.println("потому что у меня нет личной жизни, следовательно, и у вас быть не должно, максимум кошка.");
+        System.out.println("Задает домашнее задание ...");
+        System.out.println("На этом все, хороших выходный " + pupilsClass);
     }
 
     /**
@@ -45,7 +49,13 @@ public class Teacher extends Profession {
      * @return оценка.
      */
     public Mark checkHomework(Pupil pupil) {
-        return null;
+        System.out.println("Так, что мы имеем, субботний вечер и проверку домашнего задания ...");
+        System.out.println("Как бы не умереть от счастья. Чья тут у нас следующая тетрадь, ага эта " + pupil);
+        System.out.print("Она красивая, глупая, и встречается с футболистом, а у меня только кот. ");
+        System.out.println("Поставлю ей 2");
+        Mark markTwo = new Mark();
+        System.out.println("Пусть идет учиться в ПТУ");
+        return markTwo;
     }
 
     /**

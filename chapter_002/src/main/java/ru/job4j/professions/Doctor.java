@@ -36,7 +36,9 @@ public class Doctor extends Profession {
      * @param patient пациент.
      */
     public void listenProblem(Patient patient) {
-
+        System.out.println("Здравствуйте, " + patient);
+        System.out.println("Расскажите мне про ваши проблемы, мне ведь так интересно");
+        System.out.println("Да-да, я вас внимательно слушаю, как вы вообще еще живы, феноменально");
     }
 
     /**
@@ -44,7 +46,12 @@ public class Doctor extends Profession {
      * @param patient пациент.
      */
     public void treatPatient(Patient patient) {
-
+        System.out.println("Значит," + patient + ", вы говорите что у вас сломана нога, вы уверены?");
+        System.out.println("Ну давайте посмотрим ... ");
+        System.out.println("а может она всегда была с синеватым оттенком, просто вы не замечали?");
+        System.out.println("Ну ладно, давайте сделаю как было ... *хрусь*");
+        System.out.println("Почему вы плачете, мужики не должны плакать ... а вы девушка, просто коротко постриглись?");
+        System.out.println("Ну это, краситься начните хотябы");
     }
 
     /**
