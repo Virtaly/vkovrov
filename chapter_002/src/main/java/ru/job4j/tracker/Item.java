@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.Date;
+
 /**
  * Класс Item для описания заявки.
  * @author vkovrov
@@ -95,10 +97,28 @@ public class Item {
     }
 
     /**
-     * Добавление комментария к заявке.
+     * Метод для добавления комментария к заявке.
      * @param comment комментарий к заявке.
      */
     public void addComment(String comment) {
         this.comments.addComment(comment);
+    }
+
+    /**
+     * Метод для вывода информации о заявке.
+     * @return строка, содержащая информацию о заявке.
+     */
+    public String toString() {
+        Date createDate = new Date(this.create);
+        String itemString = "********\n"
+                + "Id: " + this.id
+                + "\nName: " + this.name
+                + "\nDescription: " + this.description
+                + "\nCreate date: " + createDate.toString()
+                + "\nComments:\n";
+        for (int i = 0; i < this.comments.getComments().length; i++) {
+            itemString += (i + 1) + ". " + this.comments.getComments()[i] + "\n";
+        }
+        return itemString;
     }
 }

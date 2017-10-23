@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.Arrays;
+
 /**
  * Класс Comments для описания массива комментариев к заявке.
  * @author vkovrov
@@ -40,6 +42,6 @@ public class Comments {
      * @return массив комментариев.
      */
     public String[] getComments() {
-        return this.comments;
+        return Arrays.copyOf(this.comments, commentsPosition);
     }
 }
