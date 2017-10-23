@@ -16,9 +16,11 @@ public class ConsoleInput {
 
     /**
      * Метод для считывания пользовательского ввода.
+     * @param question вопрос пользователю.
      * @return строка, в которой содержится пользовательский ввод.
      */
-    public String ask() {
+    public String ask(String question) {
+        System.out.println(question);
         return scanner.nextLine();
     }
 }

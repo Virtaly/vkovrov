@@ -65,7 +65,7 @@ public class StartUi {
     /**
      * Поле для объекта, отвечающего за консольный ввод.
      */
-    private ConsoleInput consoleInput;
+    private StubInput input;
 
     /**
      * Поле для объекта, отвечающего за систему заявок.
@@ -77,8 +77,8 @@ public class StartUi {
      * @param input обработчик пользовательского ввода.
      * @param tracker система заявок.
      */
-    public StartUi(ConsoleInput input, Tracker tracker) {
-        this.consoleInput = input;
+    public StartUi(StubInput input, Tracker tracker) {
+        this.input = input;
         this.tracker = tracker;
     }
 
@@ -98,8 +98,7 @@ public class StartUi {
             System.out.println("4. Find item by Id");
             System.out.println("5. Find items by name");
             System.out.println("6. Exit Program");
-            System.out.println("Select: ");
-            menuItem = this.consoleInput.ask();
+            menuItem = this.input.ask("Select: ");
         } while (!doTaskByMenuItem(menuItem).equals("-1"));
     }
 
@@ -121,7 +120,7 @@ public class StartUi {
                 this.update();
                 break;
             case DELETE :
-                this.delete();
+                this.deleteItem();
                 break;
             case FINDID :
                 this.findById();
@@ -142,11 +141,9 @@ public class StartUi {
     /**
      * Метод для добавления новой заявки.
      */
-    private void addItem() {
-        System.out.println("Enter name of task:");
-        String name = this.consoleInput.ask();
-        System.out.println("Enter description:");
-        String desc = this.consoleInput.ask();
+    public void addItem() {
+        String name = this.input.ask("Enter name of task:");
+        String desc = this.input.ask("Enter description:");
         Item item = new Item(name, desc, System.currentTimeMillis());
         tracker.addItem(item);
         System.out.println("New item was added.");
@@ -155,7 +152,7 @@ public class StartUi {
     /**
      * Метод для вывода на экран всех заявок, добавленных в систему.
      */
-    private void findAll() {
+    public void findAll() {
         for (Item item : tracker.findAll()) {
             System.out.println(item);
         }
@@ -165,22 +162,21 @@ public class StartUi {
      * Метод для редактирования заявки.
      * Пользователю доступно подменю для редактирования заявки.
      */
-    private void update() {
-        System.out.println("Enter task id:");
-        String id = this.consoleInput.ask();
+    public void update() {
+        String id = this.input.ask("Enter task id:");
         Item updateItem = tracker.findById(id);
         if (updateItem == null) {
             System.out.println("Task with id " + id + " not found.");
         } else {
             String editMenuItem = "-1";
             do {
-                System.out.println("What do you what to edit in this item: ");
+                System.out.println();
+                System.out.println("What do you what to edit in the item № " + id + ":");
                 System.out.println("0. Name");
                 System.out.println("1. Description");
                 System.out.println("2. Add comment");
                 System.out.println("3. Exit submenu");
-                System.out.println("Select: ");
-                editMenuItem = this.consoleInput.ask();
+                editMenuItem = this.input.ask("Select: ");
             } while (!doTaskByEditMenuItem(editMenuItem, updateItem).equals("-1"));
         }
     }
@@ -218,8 +214,7 @@ public class StartUi {
      * @param updateItem заявка.
      */
     public void editName(Item updateItem) {
-        System.out.println("Enter new task name:");
-        String name = this.consoleInput.ask();
+        String name = this.input.ask("Enter new task name:");
         Item itemWithNewName = new Item(name, updateItem.getDescription(), updateItem.getCreate());
         itemWithNewName.setId(updateItem.getId());
         this.tracker.update(itemWithNewName);
@@ -231,8 +226,7 @@ public class StartUi {
      * @param updateItem заявка.
      */
     public void editDescription(Item updateItem) {
-        System.out.println("Enter new task description:");
-        String description = this.consoleInput.ask();
+        String description = this.input.ask("Enter new task description:");
         Item itemWithNewName = new Item(updateItem.getName(), description, updateItem.getCreate());
         itemWithNewName.setId(updateItem.getId());
         this.tracker.update(itemWithNewName);
@@ -244,8 +238,7 @@ public class StartUi {
      * @param updateItem заявка.
      */
     public void addComment(Item updateItem) {
-        System.out.println("Enter new comment:");
-        updateItem.addComment(this.consoleInput.ask());
+        updateItem.addComment(this.input.ask("Enter new comment:"));
         this.tracker.update(updateItem);
         System.out.println("The new comment was added to the item with id " + updateItem.getId());
     }
@@ -253,9 +246,8 @@ public class StartUi {
     /**
      * Метод для удаления заявки.
      */
-    private void delete() {
-        System.out.println("Enter task id:");
-        String id = this.consoleInput.ask();
+    public void deleteItem() {
+        String id = this.input.ask("Enter task id:");
         if (this.tracker.findById(id) != null) {
             this.tracker.delete(this.tracker.findById(id));
             System.out.println("Task №" + id + " was deleted.");
@@ -269,8 +261,7 @@ public class StartUi {
      * Метод для поиска заявки по уникальному идентификатору.
      */
     public void findById() {
-        System.out.println("Enter task id:");
-        String id = this.consoleInput.ask();
+        String id = this.input.ask("Enter task id:");
         if (this.tracker.findById(id) != null) {
             System.out.println("Task №" + id + " was found.");
         } else {
@@ -283,8 +274,7 @@ public class StartUi {
      * На экран будут выведены все заявки с именем, соответствующим запросу.
      */
     public void findByName() {
-        System.out.println("Enter task name:");
-        String name = this.consoleInput.ask();
+        String name = this.input.ask("Enter task name:");
         if (this.tracker.findByName(name) != null) {
             for (Item item : this.tracker.findByName(name)) {
                 System.out.println(item);
@@ -299,6 +289,6 @@ public class StartUi {
      * @param args аргументы командной строки.
      */
     public static void main(String[] args) {
-        new StartUi(new ConsoleInput(), new Tracker()).init();
+        new StartUi(new StubInput(args), new Tracker()).init();
     }
 }
