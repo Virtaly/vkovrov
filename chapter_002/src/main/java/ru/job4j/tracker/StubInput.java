@@ -3,7 +3,7 @@ package ru.job4j.tracker;
 /**
  * Класс StubInput заглушка для пользовательского ввода.
  */
-public class StubInput {
+public class StubInput implements Input {
 
     /**
      * Поле для массива ответов пользователя.

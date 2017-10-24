@@ -8,7 +8,7 @@ import java.util.Scanner;
  * @version 0.1
  * @since 0.1
  */
-public class ConsoleInput {
+public class ConsoleInput implements Input {
     /**
      * Поле для объекта, отвечающего за считывание пользовательского ввода.
      */
