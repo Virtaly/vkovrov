@@ -1,5 +1,8 @@
 package ru.job4j.tracker;
 
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.input.StubInput;
+import ru.job4j.tracker.input.ValidateInput;
 import ru.job4j.tracker.menu.MenuTracker;
 
 /**
@@ -36,13 +39,14 @@ public class StartUi {
     public void init() {
         MenuTracker menuTracker = new MenuTracker(this.tracker, this.input);
         menuTracker.createUserActionArr();
-        String menuItem = "-1";
+        int menuItem;
         do {
             System.out.println("\n########## Console Tracker made by vkovrov ##########\n");
             System.out.println("What do you want to do?");
             menuTracker.showMenu();
-            menuItem = input.ask("Select:");
-        } while (menuTracker.select(menuItem));
+            menuItem = input.ask("Select:", new int[]{0, 1, 2, 3, 4, 5, 6});
+            menuTracker.select(menuItem);
+        } while (menuItem != 6);
 
     }
 
@@ -51,6 +55,6 @@ public class StartUi {
      * @param args аргументы командной строки.
      */
     public static void main(String[] args) {
-        new StartUi(new StubInput(args), new Tracker()).init();
+        new StartUi(new ValidateInput(new StubInput(args)), new Tracker()).init();
     }
 }

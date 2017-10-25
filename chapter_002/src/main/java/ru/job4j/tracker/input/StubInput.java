@@ -1,4 +1,6 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.input;
+
+import ru.job4j.tracker.menu.MenuOutException;
 
 /**
  * Класс StubInput заглушка для пользовательского ввода.
@@ -31,5 +33,28 @@ public class StubInput implements Input {
      */
     public String ask(String question) {
         return answers[answersPosition++];
+    }
+
+    /**
+     * Метод для взаимодействия с пользователем,
+     * для версии с защитой от некорректного ввода.
+     * @param question вопрос пользователю.
+     * @param range диапазон значений меню.
+     * @return ответ пользователя.
+     */
+    public int ask(String question, int[] range) {
+        boolean validMenuItemNumber = false;
+        int menuItem;
+        menuItem = Integer.valueOf(answers[answersPosition++]);
+        for (int menuItemNumber : range) {
+            if (menuItemNumber == menuItem) {
+                validMenuItemNumber = true;
+                break;
+            }
+        }
+        if (!validMenuItemNumber) {
+            throw new MenuOutException("Out of menu range!");
+        }
+        return menuItem;
     }
 }

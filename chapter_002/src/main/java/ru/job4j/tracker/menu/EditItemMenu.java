@@ -1,9 +1,8 @@
 package ru.job4j.tracker.menu;
 
-import ru.job4j.tracker.Input;
+import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.Item;
 import ru.job4j.tracker.Tracker;
-import ru.job4j.tracker.UserAction;
 
 /**
  * Класс для пункта меню Изменение заявки.
@@ -58,12 +57,13 @@ public class EditItemMenu implements UserAction {
         if (updateItem == null) {
             System.out.println("Task with id " + id + " not found.");
         } else {
-            String editMenuItem = "-1";
+            int editMenuItem;
             do {
                 System.out.println("\nWhat do you what to edit in the item № " + id + "?");
                 menuTracker.showMenu();
-                editMenuItem = input.ask("Select: ");
-            } while (menuTracker.select(editMenuItem));
+                editMenuItem = input.ask("Select: ", new int[]{0, 1, 2, 3});
+                menuTracker.select(editMenuItem);
+            } while (editMenuItem != 3);
         }
     }
 

@@ -1,9 +1,8 @@
 package ru.job4j.tracker.menu;
 
-import ru.job4j.tracker.Input;
+import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.Item;
 import ru.job4j.tracker.Tracker;
-import ru.job4j.tracker.UserAction;
 
 /**
  * Класс для меню программы.
@@ -61,16 +60,9 @@ public class MenuTracker {
     /**
      * Метод для запуска действия, выбранного пользователем.
      * @param key номер пункта меню.
-     * @return флаг выполнения операции.
      */
-    public boolean select(String key) {
-        boolean done = false;
-        int keyInt = Integer.valueOf(key);
-        if (keyInt >= 0 && keyInt < userActionArr.length - 1) {
-            userActionArr[Integer.valueOf(key)].execute(this.tracker, this.input);
-            done = true;
-        }
-        return done;
+    public void select(int key) {
+        userActionArr[key].execute(this.tracker, this.input);
     }
 
     /**
