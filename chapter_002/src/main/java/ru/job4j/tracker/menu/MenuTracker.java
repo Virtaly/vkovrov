@@ -79,7 +79,14 @@ public class MenuTracker {
     /**
      * Класс для пункта меню Добавление новой заявки.
      */
-    static class AddItem implements UserAction {
+    static class AddItem extends BaseAction {
+
+        /**
+         * Конструктор для класса добавления новой заявки.
+         */
+        AddItem() {
+            super("0", "Add new item");
+        }
 
         /**
          * Геттер для индекса действия в массиве действий.
@@ -87,14 +94,6 @@ public class MenuTracker {
          */
         public String getKey() {
             return "0";
-        }
-
-        /**
-         * Геттер для информации о действии пользователя.
-         * @return информация о действии пользователя.
-         */
-        public String getInfo() {
-            return String.format("%s. %s", this.getKey(), "Add new item");
         }
 
         /**
@@ -115,7 +114,14 @@ public class MenuTracker {
     /**
      * Класс для пункта меню Вывод на экран всех заявок, добавленных в систему.
      */
-    class ShowAllItems implements UserAction {
+    class ShowAllItems extends BaseAction {
+
+        /**
+         * Конструктор для класса вывода на экран всех заявок, добавленных в систему.
+         */
+        ShowAllItems() {
+            super("1", "Show all items");
+        }
 
         /**
          * Геттер для индекса действия в массиве действий.
@@ -123,14 +129,6 @@ public class MenuTracker {
          */
         public String getKey() {
             return "1";
-        }
-
-        /**
-         * Геттер для информации о действии пользователя.
-         * @return информация о действии пользователя.
-         */
-        public String getInfo() {
-            return String.format("%s. %s", this.getKey(), "Show all items");
         }
 
         /**
@@ -149,7 +147,14 @@ public class MenuTracker {
     /**
      * Класс для пункта меню Удаление заявки.
      */
-    class DeleteItem implements UserAction {
+    class DeleteItem extends BaseAction {
+
+        /**
+         * Конструктор для класса удаления заявки.
+         */
+        DeleteItem() {
+            super("3", "Delete item");
+        }
 
         /**
          * Геттер для индекса действия в массиве действий.
@@ -157,14 +162,6 @@ public class MenuTracker {
          */
         public String getKey() {
             return "3";
-        }
-
-        /**
-         * Геттер для информации о действии пользователя.
-         * @return информация о действии пользователя.
-         */
-        public String getInfo() {
-            return String.format("%s. %s", this.getKey(), "Delete item");
         }
 
         /**
@@ -187,7 +184,14 @@ public class MenuTracker {
     /**
      * Класс для пункта меню Поиск заявки по уникальному идентификатору.
      */
-    class FindById implements UserAction {
+    class FindById extends BaseAction {
+
+        /**
+         * Конструктор для класса поиска заявки по уникальному идентификатору.
+         */
+        FindById() {
+            super("4", "Find item by id");
+        }
 
         /**
          * Геттер для индекса действия в массиве действий.
@@ -195,14 +199,6 @@ public class MenuTracker {
          */
         public String getKey() {
             return "4";
-        }
-
-        /**
-         * Геттер для информации о действии пользователя.
-         * @return информация о действии пользователя.
-         */
-        public String getInfo() {
-            return String.format("%s. %s", this.getKey(), "Find item by id");
         }
 
         /**
@@ -223,7 +219,14 @@ public class MenuTracker {
     /**
      * Класс для пункта меню Поиск заявки по имени.
      */
-    class FindByName implements UserAction {
+    class FindByName extends BaseAction {
+
+        /**
+         * Конструктор для класса поиска заявок по имени.
+         */
+        FindByName() {
+            super("5", "Find item by name");
+        }
 
         /**
          * Геттер для индекса действия в массиве действий.
@@ -231,14 +234,6 @@ public class MenuTracker {
          */
         public String getKey() {
             return "5";
-        }
-
-        /**
-         * Геттер для информации о действии пользователя.
-         * @return информация о действии пользователя.
-         */
-        public String getInfo() {
-            return String.format("%s. %s", this.getKey(), "Find item by name");
         }
 
         /**
@@ -263,7 +258,14 @@ public class MenuTracker {
 /**
  * Класс для пункта меню Выход из программы.
  */
-class ExitProgram implements UserAction {
+class ExitProgram extends BaseAction {
+
+    /**
+     * Конструктор для класса выхода из программы.
+     */
+    ExitProgram() {
+        super("6", "Exit program");
+    }
 
     /**
      * Геттер для индекса действия в массиве действий.
@@ -271,14 +273,6 @@ class ExitProgram implements UserAction {
      */
     public String getKey() {
         return "6";
-    }
-
-    /**
-     * Геттер для информации о действии пользователя.
-     * @return информация о действии пользователя.
-     */
-    public String getInfo() {
-        return String.format("%s. %s", this.getKey(), "Exit program");
     }
 
     /**

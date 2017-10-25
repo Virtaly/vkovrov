@@ -8,7 +8,7 @@ import ru.job4j.tracker.Tracker;
  * Класс для пункта меню Изменение заявки.
  * Пользователю доступно подменю для редактирования заявки.
  */
-public class EditItemMenu implements UserAction {
+public class EditItemMenu extends BaseAction {
 
     /**
      * Поле для структуры подменю Редактирование заявки.
@@ -26,6 +26,7 @@ public class EditItemMenu implements UserAction {
      * @param input объект для взаимодействия с пользователем.
      */
     public EditItemMenu(Tracker tracker, Input input) {
+        super("2", "Edit item");
         this.menuTracker = new MenuTracker(tracker, input);
     }
     /**
@@ -34,14 +35,6 @@ public class EditItemMenu implements UserAction {
      */
     public String getKey() {
         return "2";
-    }
-
-    /**
-     * Геттер для информации о действии пользователя.
-     * @return информация о действии пользователя.
-     */
-    public String getInfo() {
-        return String.format("%s. %s", this.getKey(), "Edit item");
     }
 
     /**
@@ -70,21 +63,21 @@ public class EditItemMenu implements UserAction {
     /**
      * Класс для пункта подменю Редактирование имени заявки.
      */
-    class EditName implements UserAction {
+    class EditName extends BaseAction {
+
+        /**
+         * Конструктор для класса пункта подменю Редактирование имени заявки.
+         */
+        EditName() {
+            super("0", "Name");
+        }
+
         /**
          * Геттер для индекса действия в массиве действий.
          * @return индекс действия в массиве действий.
          */
         public String getKey() {
             return "0";
-        }
-
-        /**
-         * Геттер для информации о действии пользователя.
-         * @return информация о действии пользователя.
-         */
-        public String getInfo() {
-            return String.format("%s. %s", this.getKey(), "Name");
         }
 
         /**
@@ -105,21 +98,21 @@ public class EditItemMenu implements UserAction {
     /**
      * Класс для пункта подменю Редактирование описания заявки.
      */
-    class EditDescription implements UserAction {
+    class EditDescription extends BaseAction {
+
+        /**
+         * Конструктор для класса пункта подменю Редактирование описания заявки.
+         */
+        EditDescription() {
+            super("1", "Description");
+        }
+
         /**
          * Геттер для индекса действия в массиве действий.
          * @return индекс действия в массиве действий.
          */
         public String getKey() {
             return "1";
-        }
-
-        /**
-         * Геттер для информации о действии пользователя.
-         * @return информация о действии пользователя.
-         */
-        public String getInfo() {
-            return String.format("%s. %s", this.getKey(), "Description");
         }
 
         /**
@@ -140,21 +133,21 @@ public class EditItemMenu implements UserAction {
     /**
      * Класс для пункта подменю Добавление комментария к заявке.
      */
-    class AddComment implements UserAction {
+    class AddComment extends BaseAction {
+
+        /**
+         * Конструктор для класса пункта подменю Добавление комментария к заявке.
+         */
+        AddComment() {
+            super("2", "Add comment");
+        }
+
         /**
          * Геттер для индекса действия в массиве действий.
          * @return индекс действия в массиве действий.
          */
         public String getKey() {
             return "2";
-        }
-
-        /**
-         * Геттер для информации о действии пользователя.
-         * @return информация о действии пользователя.
-         */
-        public String getInfo() {
-            return String.format("%s. %s", this.getKey(), "Add comment");
         }
 
         /**
@@ -173,7 +166,14 @@ public class EditItemMenu implements UserAction {
     /**
      * Класс для подпункта меню Выход из редактирования заявки.
      */
-    class ExitSubMenu implements UserAction {
+    class ExitSubMenu extends BaseAction {
+
+        /**
+         * Конструктор для класса подпункта меню Выход из редактирования заявки.
+         */
+        ExitSubMenu() {
+            super("3", "Exit submenu");
+        }
 
         /**
          * Геттер для индекса действия в массиве действий.
@@ -181,14 +181,6 @@ public class EditItemMenu implements UserAction {
          */
         public String getKey() {
             return "3";
-        }
-
-        /**
-         * Геттер для информации о действии пользователя.
-         * @return информация о действии пользователя.
-         */
-        public String getInfo() {
-            return String.format("%s. %s", this.getKey(), "Exit submenu");
         }
 
         /**
