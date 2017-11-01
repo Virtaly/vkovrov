@@ -23,33 +23,19 @@ public class Bishop extends Figure {
      * @throws ImpossibleMoveException исключение невозможности движения фигуры в указанную ячейку.
      */
     public Cell[] way(Cell dist) throws ImpossibleMoveException {
+        int distanceX = this.getPosition().getX() - dist.getX();
+        int distanceY = this.getPosition().getY() - dist.getY();
         Cell[] cellWay;
-        if (((this.getPosition().getX() - this.getPosition().getY()) != (dist.getX() - dist.getY()))
-                && ((this.getPosition().getX() + this.getPosition().getY()) != (dist.getX() + dist.getY()))) {
+        if (Math.abs(distanceX) != Math.abs(distanceY)) {
             throw new ImpossibleMoveException();
         }
-        cellWay = new Cell[Math.abs(this.getPosition().getX() - dist.getX())];
-        if (dist.getX() > this.getPosition().getX()) {
-            if (dist.getY() > this.getPosition().getY()) {
-                for (int i = 1; i <= cellWay.length; i++) {
-                    cellWay[i - 1] = new Cell(this.getPosition().getX() + i, this.getPosition().getY() + i);
-                }
-            } else {
-                for (int i = 1; i <= cellWay.length; i++) {
-                    cellWay[i - 1] = new Cell(this.getPosition().getX() + i, this.getPosition().getY() - i);
-                }
-            }
-        } else {
-            if (dist.getY() > this.getPosition().getY()) {
-                for (int i = 1; i <= cellWay.length; i++) {
-                    cellWay[i - 1] = new Cell(this.getPosition().getX() - i, this.getPosition().getY() + i);
-                }
-            } else {
-                for (int i = 1; i <= cellWay.length; i++) {
-                    cellWay[i - 1] = new Cell(this.getPosition().getX() - i, this.getPosition().getY() - i);
-                }
-            }
+        cellWay = new Cell[Math.abs(distanceX)];
+        int signX = distanceX / Math.abs(distanceX);
+        int signY = distanceY / Math.abs(distanceY);
+        for (int i = 1; i <= cellWay.length; i++) {
+            cellWay[i - 1] = new Cell(this.getPosition().getX() + signX * i, this.getPosition().getY() + signY * i);
         }
+
         return cellWay;
     }
 
