@@ -48,4 +48,19 @@ public class ConvertList {
         }
         return array;
     }
+
+    /**
+     * Метод для конвертации списка массивов в список со всеми элементами массивов.
+     * @param list список массивов.
+     * @return список со всеми элементами массивов.
+     */
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> listWithAllItems = new ArrayList<>();
+        for (int[] array : list) {
+            for (int item : array) {
+                listWithAllItems.add(item);
+            }
+        }
+        return listWithAllItems;
+    }
 }

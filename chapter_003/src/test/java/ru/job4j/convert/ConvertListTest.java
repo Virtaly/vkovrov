@@ -3,6 +3,7 @@ package ru.job4j.convert;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -49,5 +50,24 @@ public class ConvertListTest {
         int[][] result = converter.toArray(list, 3);
         int[][] expected = {{1, 2, 3}, {4, 5, 6}, {7, 0, 0}};
         assertThat(result, is(expected));
+    }
+
+    /**
+     * Тест для метода convert.
+     * Метод должен вернуть список со всеми элементами массивов.
+     */
+    @Test
+    public void whenConvertListOfArraysToIntegerListThenListWithAllElementsOfArrays() {
+        ConvertList converter = new ConvertList();
+        List<int[]> list = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            list.add(new int[i + 1]);
+            for (int j = 0; j < list.size(); j++) {
+                list.get(i)[j] = j;
+            }
+        }
+        List<Integer> result = converter.convert(list);
+        int[] expected = {0, 0, 1, 0, 1, 2};
+        assertThat(result.toArray(), is(expected));
     }
 }
