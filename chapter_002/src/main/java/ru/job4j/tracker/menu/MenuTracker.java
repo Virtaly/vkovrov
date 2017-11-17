@@ -4,6 +4,10 @@ import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.Item;
 import ru.job4j.tracker.Tracker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Класс для меню программы.
  */
@@ -12,7 +16,7 @@ public class MenuTracker {
     /**
      * Поле для массива действий пользователя.
      */
-    private UserAction[] userActionArr;
+    private List<UserAction> userActionArr;
 
     /**
      * Поле для системы заявок.
@@ -38,14 +42,14 @@ public class MenuTracker {
      * Метод для инициализации массива действий пользователя для главного меню.
      */
     public void createUserActionArr() {
-        this.userActionArr = new UserAction[7];
-        userActionArr[0] = new MenuTracker.AddItem();
-        userActionArr[1] = this.new ShowAllItems();
-        userActionArr[2] = new EditItemMenu(tracker, input);
-        userActionArr[3] = this.new DeleteItem();
-        userActionArr[4] = this.new FindById();
-        userActionArr[5] = this.new FindByName();
-        userActionArr[6] = new ExitProgram();
+        this.userActionArr = new ArrayList<>();
+        userActionArr.add(new MenuTracker.AddItem());
+        userActionArr.add(this.new ShowAllItems());
+        userActionArr.add(new EditItemMenu(tracker, input));
+        userActionArr.add(this.new DeleteItem());
+        userActionArr.add(this.new FindById());
+        userActionArr.add(this.new FindByName());
+        userActionArr.add(new ExitProgram());
     }
 
     /**
@@ -62,7 +66,7 @@ public class MenuTracker {
      * @param key номер пункта меню.
      */
     public void select(int key) {
-        userActionArr[key].execute(this.tracker, this.input);
+        userActionArr.get(key).execute(this.tracker, this.input);
     }
 
     /**
@@ -70,10 +74,8 @@ public class MenuTracker {
      * @param actions действия пользователя.
      */
     public void createUserActionArr(UserAction... actions) {
-        this.userActionArr = new UserAction[actions.length];
-        for (int i = 0; i < actions.length; i++) {
-            userActionArr[i] = actions[i];
-        }
+        this.userActionArr = new ArrayList<>();
+        userActionArr.addAll(Arrays.asList(actions));
     }
 
     /**

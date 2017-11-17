@@ -5,6 +5,8 @@ import ru.job4j.tracker.Item;
 import ru.job4j.tracker.StartUi;
 import ru.job4j.tracker.Tracker;
 
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -25,7 +27,7 @@ public class StubInputTest {
         Tracker tracker = new Tracker();
         StubInput input = new StubInput(new String[]{"0", "First task", "First description", "6"});
         new StartUi(input, tracker).init();
-        String result = tracker.findAll()[0].getName();
+        String result = tracker.findAll().get(0).getName();
         String expected = "First task";
         assertThat(result, is(expected));
     }
@@ -42,7 +44,7 @@ public class StubInputTest {
         tracker.addItem(item);
         StubInput input = new StubInput(new String[]{"1", "6"});
         new StartUi(input, tracker).init();
-        Item[] itemsArr = tracker.findAll();
+        List<Item> itemsArr = tracker.findAll();
         String result = "";
         for (Item itemToString : itemsArr) {
             result += itemToString.toString();
@@ -61,10 +63,10 @@ public class StubInputTest {
         Tracker tracker = new Tracker();
         Item item = new Item("First task", "First description", System.currentTimeMillis());
         tracker.addItem(item);
-        StubInput input = new StubInput(new String[]{"2", tracker.findAll()[0].getId(),
+        StubInput input = new StubInput(new String[]{"2", tracker.findAll().get(0).getId(),
                 "0", "First task v2", "3", "6"});
         new StartUi(input, tracker).init();
-        String result = tracker.findAll()[0].getName();
+        String result = tracker.findAll().get(0).getName();
         String expected = "First task v2";
         assertThat(result, is(expected));
     }
@@ -79,10 +81,10 @@ public class StubInputTest {
         Tracker tracker = new Tracker();
         Item item = new Item("First task", "First description", System.currentTimeMillis());
         tracker.addItem(item);
-        StubInput input = new StubInput(new String[]{"2", tracker.findAll()[0].getId(),
+        StubInput input = new StubInput(new String[]{"2", tracker.findAll().get(0).getId(),
                 "1", "First description v2", "3", "6"});
         new StartUi(input, tracker).init();
-        String result = tracker.findAll()[0].getDescription();
+        String result = tracker.findAll().get(0).getDescription();
         String expected = "First description v2";
         assertThat(result, is(expected));
     }
@@ -97,10 +99,10 @@ public class StubInputTest {
         Tracker tracker = new Tracker();
         Item item = new Item("First task", "First description", System.currentTimeMillis());
         tracker.addItem(item);
-        StubInput input = new StubInput(new String[]{"2", tracker.findAll()[0].getId(),
+        StubInput input = new StubInput(new String[]{"2", tracker.findAll().get(0).getId(),
                 "2", "First comment", "3", "6"});
         new StartUi(input, tracker).init();
-        String result = tracker.findAll()[0].getComments()[0];
+        String result = tracker.findAll().get(0).getComments()[0];
         String expected = "First comment";
         assertThat(result, is(expected));
     }
@@ -132,7 +134,7 @@ public class StubInputTest {
         Tracker tracker = new Tracker();
         Item item = new Item("First task", "First description", System.currentTimeMillis());
         tracker.addItem(item);
-        StubInput input = new StubInput(new String[]{"4", tracker.findAll()[0].getId(), "6"});
+        StubInput input = new StubInput(new String[]{"4", tracker.findAll().get(0).getId(), "6"});
         new StartUi(input, tracker).init();
         Item result = tracker.findById(item.getId());
         Item expected = item;
@@ -153,7 +155,7 @@ public class StubInputTest {
         tracker.addItem(item);
         StubInput input = new StubInput(new String[]{"5", "First task", "6"});
         new StartUi(input, tracker).init();
-        int result = tracker.findByName(item.getName()).length;
+        int result = tracker.findByName(item.getName()).size();
         int expected = 2;
         assertThat(result, is(expected));
     }
