@@ -47,4 +47,20 @@ public class User implements Comparable<User> {
     public String toString() {
         return String.format("%s is %d", this.name, this.age);
     }
+
+    /**
+     * Геттер для имени.
+     * @return имя.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Геттер для возраста.
+     * @return возраст.
+     */
+    public int getAge() {
+        return this.age;
+    }
 }
