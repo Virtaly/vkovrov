@@ -79,7 +79,7 @@ public class SortUserTest {
                 new User("Misha", 23),
                 new User("Aleksandra", 24)));
         String result = new SortUser().sortByAllFields(users).toString();
-        String expected = "[Aleksandra is 24, Misha is 23, Misha is 23, Vitaly is 23, Vitaly is 25]";
+        String expected = "[Misha is 23, Misha is 23, Vitaly is 23, Vitaly is 25, Aleksandra is 24]";
         assertThat(result, is(expected));
     }
 }

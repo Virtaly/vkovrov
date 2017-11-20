@@ -33,9 +33,7 @@ public class SortUser {
         list.sort(new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                boolean equal = o1.getName().length() == o2.getName().length();
-                boolean more = o1.getName().length() > o2.getName().length();
-                return equal ? 0 : (more ? 1 : -1);
+                return Integer.compare(o1.getName().length(), o2.getName().length());
             }
         });
         return list;
@@ -50,8 +48,9 @@ public class SortUser {
         list.sort(new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                return o1.getName().compareTo(o2.getName()) == 0
-                        ? Integer.compare(o1.getAge(), o2.getAge()) : o1.getName().compareTo(o2.getName());
+                int compareNameLength = Integer.compare(o1.getName().length(), o2.getName().length());
+                return compareNameLength == 0
+                        ? Integer.compare(o1.getAge(), o2.getAge()) : compareNameLength;
             }
         });
         return list;
