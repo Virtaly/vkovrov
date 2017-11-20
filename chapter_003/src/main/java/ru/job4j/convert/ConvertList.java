@@ -34,17 +34,21 @@ public class ConvertList {
      * @return целочисленный двумерный массив.
      */
     public int[][] toArray(List<Integer> list, int rows) {
-        int[][] array = new int[rows][(int) Math.ceil((double) list.size() / rows)];
-        //int zeroNumber = (list.size() / rows) - (list.size() % rows);
-        Iterator<Integer> iterator = list.iterator();
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[0].length; j++) {
-                if (iterator.hasNext()) {
-                    array[i][j] = iterator.next();
-                } else {
-                    array[i][j] = 0;
+        int[][] array;
+        if (list != null && rows > 0) {
+            array = new int[rows][(int) Math.ceil((double) list.size() / rows)];
+            Iterator<Integer> iterator = list.iterator();
+            for (int i = 0; i < array.length; i++) {
+                for (int j = 0; j < array[0].length; j++) {
+                    if (iterator.hasNext()) {
+                        array[i][j] = iterator.next();
+                    } else {
+                        array[i][j] = 0;
+                    }
                 }
             }
+        } else {
+            throw new IllegalArgumentException("null pointer or illegal rows number");
         }
         return array;
     }
