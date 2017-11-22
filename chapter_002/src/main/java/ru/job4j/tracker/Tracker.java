@@ -51,10 +51,8 @@ public class Tracker {
      * @param deleteItem заявка, которую нужно удалить.
      */
     public void delete(Item deleteItem) {
-        for (int i = 0; i < this.items.size(); i++) {
-            if (items.get(i).getId().equals(deleteItem.getId())) {
-                items.remove(i);
-            }
+        if (items.indexOf(deleteItem) != -1) {
+            items.remove(items.indexOf(deleteItem));
         }
     }
 
