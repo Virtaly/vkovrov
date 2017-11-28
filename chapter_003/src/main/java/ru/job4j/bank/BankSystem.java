@@ -1,6 +1,7 @@
 package ru.job4j.bank;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -30,10 +31,7 @@ public class BankSystem {
      * @param user новый пользователь.
      */
     public void addUser(User user) {
-        if (users != null) {
             this.users.putIfAbsent(user, new ArrayList<>());
-        }
-
     }
 
     /**
@@ -41,9 +39,7 @@ public class BankSystem {
      * @param user удаляемый пользователь.
      */
     public void deleteUser(User user) {
-        if (user != null && users.containsKey(user)) {
             users.remove(user);
-        }
     }
 
     /**
@@ -52,9 +48,10 @@ public class BankSystem {
      * @param account новый аккаунт.
      */
     public void addAccountToUser(User user, Account account) {
-        if (user != null && users.containsKey(user) && account != null) {
-            users.get(user).add(account);
-        }
+            List<Account> accounts = users.get(user);
+            if (accounts != null) {
+                accounts.add(account);
+            }
     }
 
     /**
@@ -63,8 +60,9 @@ public class BankSystem {
      * @param account удаляемый аккаунт.
      */
     public void deleteAccountFromUser(User user, Account account) {
-        if (user != null && users.containsKey(user) && account != null && users.get(user).contains(account)) {
-            users.get(user).remove(account);
+        List<Account> accounts = users.get(user);
+        if (accounts != null) {
+            accounts.remove(account);
         }
     }
 
@@ -74,11 +72,7 @@ public class BankSystem {
      * @return список аккаунтов пользователя.
      */
     public List<Account> getUserAccounts(User user) {
-        List<Account> accounts = null;
-        if (user != null && users.containsKey(user)) {
-            accounts = users.get(user);
-        }
-        return accounts;
+        return users.getOrDefault(user, Collections.emptyList());
     }
 
     /**
@@ -93,9 +87,12 @@ public class BankSystem {
     public boolean transferMoney(
             User srcUser, Account srcAccount, User dstUser, Account dstAccount, double amount) {
         boolean transferSuccess = false;
-        if (users.containsKey(srcUser) && users.containsKey(dstUser)
-                && users.get(srcUser).contains(srcAccount) && users.get(dstUser).contains(dstAccount)) {
-            transferSuccess = srcAccount.transferAmount(dstAccount, amount);
+        List<Account> srcUserAccounts = users.get(srcUser);
+        List<Account> dstUserAccounts = users.get(dstUser);
+        if (srcUserAccounts != null && dstUserAccounts != null) {
+            if (srcUserAccounts.contains(srcAccount) && dstUserAccounts.contains(dstAccount)) {
+                transferSuccess = srcAccount.transferAmount(dstAccount, amount);
+            }
         }
         return transferSuccess;
     }
