@@ -30,22 +30,12 @@ public class IteratorOfIterators {
             private Iterator<Integer> currentIterator = aIt.next();
 
             /**
-             * Поле для указателя поиска элемента в методе hasNext.
-             */
-            private Iterator<Integer> fakeIterator = aIt.next();
-
-            /**
              * Метод для определения наличия следующего элемента.
              * @return есть ли следующий элемент.
              */
             @Override
             public boolean hasNext() {
-                if (!fakeIterator.hasNext()) {
-                    fakeIterator = aIt.next();
-                }
-                boolean result = fakeIterator.hasNext();
-                fakeIterator = currentIterator;
-                return result;
+                return currentIterator.hasNext() || aIt.next().hasNext();
             }
 
             /**
