@@ -40,11 +40,12 @@ public class PrimeIterator implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        boolean result;
-        if (fakeIndex < array.length) {
-            result = this.isSimple(array[fakeIndex++]) || hasNext();
-        } else {
-            result = false;
+        boolean result = false;
+        while (fakeIndex < array.length) {
+            if (this.isSimple(array[fakeIndex++])) {
+                result = true;
+                break;
+            }
         }
         fakeIndex = index;
         return result;
@@ -57,13 +58,18 @@ public class PrimeIterator implements Iterator {
     @Override
     public Object next() {
         fakeIndex = index;
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        } else {
-            int item = array[index++];
+        int item = 0;
+        while (hasNext()) {
+            item = array[index++];
             fakeIndex = index;
-            return isSimple(item) ? item : next();
+            if (isSimple(item)) {
+                break;
+            }
         }
+        if (item == 0) {
+            throw new NoSuchElementException();
+        }
+        return item;
     }
 
     /**
