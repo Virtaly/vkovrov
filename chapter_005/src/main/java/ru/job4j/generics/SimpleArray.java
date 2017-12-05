@@ -69,4 +69,12 @@ public class SimpleArray<T> {
     public T get(int index) {
         return (T) this.array[index];
     }
+
+    /**
+     * Метод для получения длины заполненного массива.
+     * @return длина заполненного массива.
+     */
+    public int getLength() {
+        return this.cursor;
+    }
 }
