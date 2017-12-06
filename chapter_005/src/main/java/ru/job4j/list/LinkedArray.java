@@ -44,6 +44,24 @@ public class LinkedArray<E> implements Iterable<E> {
     }
 
     /**
+     * Метод для получения узла элемента из контейнера.
+     * @param item элемент.
+     * @return узел элемента контейнера.
+     */
+    public Node<E> getNode(E item) {
+        Node<E> node = first;
+        Node<E> result = null;
+        while (node != null) {
+            if (node.getData().equals(item)) {
+                result = node;
+                break;
+            }
+            node = node.getNext();
+        }
+        return result;
+    }
+
+    /**
      * Метод для получения элемента из контейнера.
      * @param item элемент.
      * @return элемент контейнера.
@@ -59,6 +77,64 @@ public class LinkedArray<E> implements Iterable<E> {
             node = node.getNext();
         }
         return result;
+    }
+
+    /**
+     * Метод для получения первого элемента из контейнера.
+     * @return первый элемент контейнера.
+     */
+    public E getFirst() {
+        return this.first.getData();
+    }
+
+    /**
+     * Метод для получения последнего элемента из контейнера.
+     * @return последний элемент контейнера.
+     */
+    public E getLast() {
+        return this.last.getData();
+    }
+
+    /**
+     * Метод для удаления элемента из контейнера.
+     * @param item значение элемента.
+     * @return значение элемента.
+     */
+    public E remove(E item) {
+        Node<E> node = this.getNode(item);
+        if (node == first) {
+            removeFirst(item);
+        } else if (node == last) {
+            removeLast(item);
+        } else {
+            node.getPrevious().setNext(node.getNext());
+            node.getNext().setPrevious(node.getPrevious());
+        }
+        return node.getData();
+    }
+
+    /**
+     * Метод для удаления первого элемента из контейнера.
+     * @param item значение первого элемента.
+     * @return значение первого элемента.
+     */
+    private E removeFirst(E item) {
+        Node<E> node = this.getNode(item);
+        node.getNext().setPrevious(null);
+        first = node.getNext();
+        return node.getData();
+    }
+
+    /**
+     * Метод для удаления последнего элемента из контейнера.
+     * @param item значение последнего элемента.
+     * @return значение последнего элемента.
+     */
+    private E removeLast(E item) {
+        Node<E> node = this.getNode(item);
+        node.getPrevious().setNext(null);
+        last = node.getPrevious();
+        return node.getData();
     }
 
     /**
