@@ -34,7 +34,7 @@ public class LinkedArrayTest {
     public void setUp() {
         da = new LinkedArray<>();
         for (int i = 0; i < 3; i++) {
-            da.add(i);
+            da.add(i + 1);
         }
         it = da.iterator();
     }
@@ -43,31 +43,31 @@ public class LinkedArrayTest {
      * Тест для методов next() и hasNext().
      * Должен пройти все проверки и в конце выбросить исключение отсутствия следующего элемента.
      */
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void shouldReturnExceptionAfterPassedTests() {
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(0));
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(2));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(3));
         assertThat(it.hasNext(), is(false));
         assertThat(it.hasNext(), is(false));
-        it.next();
     }
 
     /**
      * Тест для методов add и get.
      * Метод должен добавить элементы и вывести ожидаемый элемент.
      */
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void whenAddElementsThenArrayHasTheseElements() {
         for (int i = 3; i < 20; i++) {
-            da.add(i);
+            da.add(i + 1);
         }
-        assertThat(da.get(19), is(19));
+        assertThat(da.get(5), is(6));
+        da.get(25);
     }
 }

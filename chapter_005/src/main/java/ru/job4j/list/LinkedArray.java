@@ -24,10 +24,9 @@ public class LinkedArray<E> implements Iterable<E> {
     private Node<E> last;
 
     /**
-     * Конструктор класса.
+     * Поле для размера списка.
      */
-    public LinkedArray() {
-    }
+    private int size = 0;
 
     /**
      * Метод для добавления элемента в контейнер.
@@ -41,6 +40,7 @@ public class LinkedArray<E> implements Iterable<E> {
             last.setNext(newNode);
         }
         last = newNode;
+        size++;
     }
 
     /**
@@ -63,20 +63,18 @@ public class LinkedArray<E> implements Iterable<E> {
 
     /**
      * Метод для получения элемента из контейнера.
-     * @param item элемент.
+     * @param index индекс элемента.
      * @return элемент контейнера.
      */
-    public E get(E item) {
+    public E get(int index) {
+        if (index >= size) {
+            throw new IllegalArgumentException();
+        }
         Node<E> node = first;
-        E result = null;
-        while (node != null) {
-            if (node.getData().equals(item)) {
-                result = node.getData();
-                break;
-            }
+        for (int i = 1; i <= index; i++) {
             node = node.getNext();
         }
-        return result;
+        return node.getData();
     }
 
     /**
@@ -110,6 +108,7 @@ public class LinkedArray<E> implements Iterable<E> {
             node.getPrevious().setNext(node.getNext());
             node.getNext().setPrevious(node.getPrevious());
         }
+        size--;
         return node.getData();
     }
 
