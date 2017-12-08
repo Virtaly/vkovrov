@@ -29,13 +29,23 @@ public class IteratorOfIterators {
              */
             private Iterator<Integer> currentIterator = aIt.next();
 
+            private boolean iteratorEndFlag = false;
+
             /**
              * Метод для определения наличия следующего элемента.
              * @return есть ли следующий элемент.
              */
             @Override
             public boolean hasNext() {
-                return currentIterator.hasNext() || aIt.next().hasNext();
+                boolean isHasNext;
+                if (currentIterator.hasNext()) {
+                    isHasNext = true;
+                } else {
+                    iteratorEndFlag = true;
+                    isHasNext = aIt.hasNext();
+                }
+
+                return isHasNext;
             }
 
             /**
@@ -46,6 +56,10 @@ public class IteratorOfIterators {
             public Integer next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
+                }
+                if (iteratorEndFlag) {
+                    currentIterator = aIt.next();
+                    iteratorEndFlag = false;
                 }
                 return currentIterator.next();
             }

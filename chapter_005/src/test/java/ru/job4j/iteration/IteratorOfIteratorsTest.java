@@ -30,9 +30,8 @@ public class IteratorOfIteratorsTest {
     public void setUp() {
         Iterator<Integer> it1 = Arrays.asList(1, 2, 3).iterator();
         Iterator<Integer> it2 = Arrays.asList(4, 5, 6).iterator();
-        Iterator<Integer> it3 = Arrays.asList(0).iterator();
-        Iterator<Integer> it4 = Arrays.asList(7, 8, 9).iterator();
-        Iterator<Iterator<Integer>> its = Arrays.asList(it1, it2, it3, it4).iterator();
+        Iterator<Integer> it3 = Arrays.asList(7, 8, 9).iterator();
+        Iterator<Iterator<Integer>> its = Arrays.asList(it1, it2, it3).iterator();
         IteratorOfIterators converter = new IteratorOfIterators();
         it = converter.convert(its);
     }
@@ -41,7 +40,7 @@ public class IteratorOfIteratorsTest {
      * Тест для методов next() и hasNext().
      * Должен пройти все проверки и в конце выбросить исключение отсутствия следующего элемента.
      */
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void hasNextNextSequentialInvocation() {
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
@@ -62,7 +61,6 @@ public class IteratorOfIteratorsTest {
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(9));
         assertThat(it.hasNext(), is(false));
-        it.next();
     }
 
     /**
@@ -89,6 +87,13 @@ public class IteratorOfIteratorsTest {
      */
     @Test(expected = NoSuchElementException.class)
     public void sequentialHasNextInvocationDoesntAffectRetrievalOrder() {
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
