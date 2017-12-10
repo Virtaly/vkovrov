@@ -39,9 +39,9 @@ public class SimpleStackTest {
         for (int i = 3; i < 10; i++) {
             ss.push(i);
         }
-        for (int i = 3; i < 10; i++) {
+        for (int i = 0; i < 9; i++) {
             ss.poll();
         }
-        assertThat(ss.poll(), is(2));
+        assertThat(ss.poll(), is(0));
     }
 }

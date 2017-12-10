@@ -39,9 +39,21 @@ public class SimpleQueueTest {
         for (int i = 3; i < 10; i++) {
             sq.push(i);
         }
-        for (int i = 3; i < 10; i++) {
+        for (int i = 0; i < 9; i++) {
             sq.poll();
         }
-        assertThat(sq.poll(), is(7));
+        assertThat(sq.poll(), is(9));
+    }
+
+    /**
+     * Тест для методов push и poll.
+     * Метод должен добавить, удалить элемент.
+     */
+    @Test
+    public void whenPushAndPollOneElementThenNoExceptions() {
+        SimpleQueue<Integer> queue = new SimpleQueue<>();
+        queue.push(1);
+        int i = queue.poll();
+        assertThat(i, is(1));
     }
 }

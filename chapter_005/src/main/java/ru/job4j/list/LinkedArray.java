@@ -119,7 +119,9 @@ public class LinkedArray<E> implements Iterable<E> {
      */
     private E removeFirst(E item) {
         Node<E> node = this.getNode(item);
-        node.getNext().setPrevious(null);
+        if (node.getNext() != null) {
+            node.getNext().setPrevious(null);
+        }
         first = node.getNext();
         return node.getData();
     }
@@ -131,7 +133,9 @@ public class LinkedArray<E> implements Iterable<E> {
      */
     private E removeLast(E item) {
         Node<E> node = this.getNode(item);
-        node.getPrevious().setNext(null);
+        if (node.getPrevious() != null) {
+            node.getPrevious().setNext(null);
+        }
         last = node.getPrevious();
         return node.getData();
     }
