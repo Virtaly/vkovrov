@@ -46,13 +46,13 @@ public class UserTest {
 
     /**
      * Тест для метода put.
-     * Метод должен добавить элементы.
+     * Метод должен перезаписать элемент.
      */
     @Test
-    public void whenPutTwoSimilarUsersWithoutHashCodeThenPutBoth() {
+    public void whenPutTwoSimilarUsersWithHashCodeAndEqualsThenRestore() {
         container.put(firstUser, new Object());
         container.put(secondUser, new Object());
         System.out.println(container);
-        assertThat(container.size(), is(2));
+        assertThat(container.size(), is(1));
     }
 }
