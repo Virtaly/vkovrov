@@ -49,7 +49,7 @@ public class UserTest {
      * Метод должен добавить элементы.
      */
     @Test
-    public void whenPutTwoSimilarUsersWithoutEqualsThenPutBoth() {
+    public void whenPutTwoSimilarUsersWithoutHashCodeThenPutBoth() {
         container.put(firstUser, new Object());
         container.put(secondUser, new Object());
         System.out.println(container);
