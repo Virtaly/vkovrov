@@ -48,6 +48,20 @@ public class SimpleSet<E> implements Iterator<E> {
      * @param e элемент.
      */
     public void add(E e) {
+        if (!hasDuplicate(e)) {
+            if (pointer >= container.length) {
+                container = Arrays.copyOf(container, container.length * 2);
+            }
+            container[pointer++] = e;
+        }
+    }
+
+    /**
+     * Метод для поиска дубликата элемента в множестве.
+     * @param e элемент.
+     * @return есть ли элемент в множестве.
+     */
+    public boolean hasDuplicate(E e) {
         boolean arrayContainsE = false;
         for (int i = 0; i < pointer; i++) {
             if (e.equals((E) container[i])) {
@@ -55,12 +69,7 @@ public class SimpleSet<E> implements Iterator<E> {
                 break;
             }
         }
-        if (!arrayContainsE) {
-            if (pointer >= container.length) {
-                container = Arrays.copyOf(container, container.length * 2);
-            }
-            container[pointer++] = e;
-        }
+        return arrayContainsE;
     }
 
     /**
