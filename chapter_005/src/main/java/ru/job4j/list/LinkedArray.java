@@ -44,6 +44,24 @@ public class LinkedArray<E> implements Iterable<E> {
     }
 
     /**
+     * Метод для определения есть ли элемент в контейнере.
+     * @param e значение элемента.
+     * @return есть ли элемент в контейнере.
+     */
+    public boolean contains(E e) {
+        boolean arrayContainsE = false;
+        Node<E> newNode = first;
+        while (newNode != null) {
+            if (e.equals(newNode.getData())) {
+                arrayContainsE = true;
+                break;
+            }
+            newNode = newNode.getNext();
+        }
+        return arrayContainsE;
+    }
+
+    /**
      * Метод для получения узла элемента из контейнера.
      * @param item элемент.
      * @return узел элемента контейнера.

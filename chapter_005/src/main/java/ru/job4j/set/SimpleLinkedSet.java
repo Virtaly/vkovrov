@@ -1,7 +1,8 @@
 package ru.job4j.set;
 
+import ru.job4j.list.LinkedArray;
+
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Класс для описания связного множества.
@@ -13,43 +14,35 @@ import java.util.NoSuchElementException;
 public class SimpleLinkedSet<E> implements Iterator<E> {
 
     /**
-     * Поле для первого узла.
+     * Поле для связного списка.
      */
-    private Node<E> first;
+    private LinkedArray<E> linked;
 
     /**
-     * Поле для последнего узла.
+     * Поле для итератора связного списка.
      */
-    private Node<E> last;
+    private Iterator<E> iterator;
 
     /**
-     * Текущий узел для итератора.
+     * Поле для флага итератора.
      */
-    private Node<E> current;
+    private boolean iteratorFlag;
+
+    /**
+     * Конструктор класса.
+     */
+    public SimpleLinkedSet() {
+        this.linked = new LinkedArray<>();
+    }
 
     /**
      * Метод для добавления элемента в контейнер.
      * @param e элемент.
      */
     public void add(E e) {
-        boolean arrayContainsE = false;
-        Node<E> newNode = first;
-        while (newNode != null) {
-            if (e.equals(newNode.getData())) {
-                arrayContainsE = true;
-                break;
-            }
-            newNode = newNode.getNext();
-        }
-        if (!arrayContainsE) {
-            newNode = new Node<>(last, e, null);
-            if (last == null) {
-                first = newNode;
-                current = first;
-            } else {
-                last.setNext(newNode);
-            }
-            last = newNode;
+        if (!linked.contains(e)) {
+            linked.add(e);
+            iteratorFlag = false;
         }
     }
 
@@ -59,7 +52,8 @@ public class SimpleLinkedSet<E> implements Iterator<E> {
      */
     @Override
     public boolean hasNext() {
-        return current != null;
+        createIterator();
+        return iterator.hasNext();
     }
 
     /**
@@ -68,97 +62,17 @@ public class SimpleLinkedSet<E> implements Iterator<E> {
      */
     @Override
     public E next() {
-        if (!hasNext()) {
-            current = first;
-            throw new NoSuchElementException();
-        }
-        Node<E> node = current;
-        current = current.getNext();
-        return node.getData();
+        createIterator();
+        return iterator.next();
     }
 
     /**
-     * Класс для описания узла связного массива.
-     * @author vkovrov
-     * @version 0.1
-     * @since 0.1
-     * @param <T> тип хранимого в узле объекта.
+     * Метод для создания итератора.
      */
-    private class Node<T> {
-
-        /**
-         * Поле для предыдущего узла.
-         */
-        private Node<T> previous;
-
-        /**
-         * Поле для данных, хранимых в узле.
-         */
-        private T data;
-
-        /**
-         * Поле для следующего узла.
-         */
-        private Node<T> next;
-
-        /**
-         * Конструктор класса.
-         * @param previous предыдущий узел.
-         * @param data данные, хранимые в узле.
-         * @param next следующий узел.
-         */
-        Node(Node<T> previous, T data, Node<T> next) {
-            this.previous = previous;
-            this.data = data;
-            this.next = next;
-        }
-
-        /**
-         * Геттер для предыдущего узла.
-         * @return предыдущий узел.
-         */
-        public Node<T> getPrevious() {
-            return previous;
-        }
-
-        /**
-         * Cеттер для предыдущего узла.
-         * @param previous предыдущий узел.
-         */
-        public void setPrevious(Node<T> previous) {
-            this.previous = previous;
-        }
-
-        /**
-         * Геттер для данных, хранимых в узле.
-         * @return данные, хранимые в узле.
-         */
-        public T getData() {
-            return data;
-        }
-
-        /**
-         * Cеттер для данных, хранимых в узле.
-         * @param data данные, хранимые в узле.
-         */
-        public void setData(T data) {
-            this.data = data;
-        }
-
-        /**
-         * Геттер для следующего узла.
-         * @return следующий узел.
-         */
-        public Node<T> getNext() {
-            return next;
-        }
-
-        /**
-         * Cеттер для следующего узла.
-         * @param next следующий узел.
-         */
-        public void setNext(Node<T> next) {
-            this.next = next;
+    private void createIterator() {
+        if (!iteratorFlag) {
+            iterator = linked.iterator();
+            iteratorFlag = true;
         }
     }
 }
