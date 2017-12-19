@@ -47,6 +47,14 @@ public class SimpleLinkedSet<E> implements Iterator<E> {
     }
 
     /**
+     * Метод для удаления элемента из контейнера.
+     * @param e элемент.
+     */
+    public void remove(E e) {
+        linked.remove(e);
+    }
+
+    /**
      * Метод для определения наличия следующего элемента в массиве.
      * @return есть ли следующий элемент в массиве.
      */
@@ -74,5 +82,13 @@ public class SimpleLinkedSet<E> implements Iterator<E> {
             iterator = linked.iterator();
             iteratorFlag = true;
         }
+    }
+
+    /**
+     * Геттер для первого узла множества.
+     * @return первого значения множества.
+     */
+    public LinkedArray.Node getFirst() {
+        return linked.getFirst();
     }
 }

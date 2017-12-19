@@ -7,29 +7,29 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Тест для класса HashTableSet.
+ * Тест для класса HashTableSetChain.
  * @author Vitaly Kovrov (mailto:virtaly@ya.ru)
  * @version 0.1
  * @since 0.1
  */
-public class HashTableSetTest {
+public class HashTableSetChainTest {
 
     /**
      * Поле для структуры данных.
      */
-    private HashTableSet<Integer> hts;
+    private HashTableSetChain<Integer> htsc;
 
     /**
      * Метод для создания структуры данных перед запуском тестов.
      */
     @Before
     public void setUp() {
-        hts = new HashTableSet<>();
+        htsc = new HashTableSetChain<>();
         for (int i = 0; i < 3; i++) {
-            hts.add(i + 1);
+            htsc.add(i + 1);
         }
         for (int i = 0; i < 3; i++) {
-            hts.add(i + 1);
+            htsc.add(i + 1);
         }
     }
 
@@ -40,10 +40,10 @@ public class HashTableSetTest {
     @Test
     public void whenRemoveElementsThenArrayHasntTheseElements() {
         for (int i = 0; i < 3; i++) {
-            assertThat(hts.remove(i + 1), is(true));
+            assertThat(htsc.remove(i + 1), is(true));
         }
         for (int i = 0; i < 20; i++) {
-            assertThat(hts.contains(i + 1), is(false));
+            assertThat(htsc.contains(i + 1), is(false));
         }
     }
 
@@ -54,10 +54,10 @@ public class HashTableSetTest {
     @Test
     public void whenAddElementsThenArrayHasTheseElements() {
         for (int i = 3; i < 20; i++) {
-            assertThat(hts.add(i + 1), is(true));
+            assertThat(htsc.add(i + 1), is(true));
         }
         for (int i = 0; i < 20; i++) {
-            assertThat(hts.contains(i + 1), is(true));
+            assertThat(htsc.contains(i + 1), is(true));
         }
     }
 }

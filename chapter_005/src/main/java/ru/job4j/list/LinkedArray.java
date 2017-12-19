@@ -99,16 +99,16 @@ public class LinkedArray<E> implements Iterable<E> {
      * Метод для получения первого элемента из контейнера.
      * @return первый элемент контейнера.
      */
-    public E getFirst() {
-        return this.first.getData();
+    public Node<E> getFirst() {
+        return this.first;
     }
 
     /**
      * Метод для получения последнего элемента из контейнера.
      * @return последний элемент контейнера.
      */
-    public E getLast() {
-        return this.last.getData();
+    public Node<E> getLast() {
+        return this.last;
     }
 
     /**
@@ -203,7 +203,7 @@ public class LinkedArray<E> implements Iterable<E> {
      * @since 0.1
      * @param <T> тип хранимого в узле объекта.
      */
-    private class Node<T> {
+    public class Node<T> {
 
         /**
          * Поле для предыдущего узла.
