@@ -95,4 +95,37 @@ public class MultiPathTreeTest {
         assertThat(it.hasNext(), is(false));
         assertThat(it.hasNext(), is(false));
     }
+
+    /**
+     * Тест для метода isBinary.
+     * Должен вывести вернуть true, т.к. дерево бинарное.
+     */
+    @Test
+    public void shouldBeBinaryTree() {
+        MultiPathTree<Integer> binaryTree = new MultiPathTree<>(1);
+        binaryTree.add(1, 2);
+        binaryTree.add(1, 3);
+        binaryTree.add(2, 4);
+        binaryTree.add(2, 5);
+        binaryTree.add(3, 6);
+        binaryTree.add(6, 7);
+        assertThat(binaryTree.isBinary(), is(true));
+    }
+
+    /**
+     * Тест для метода isBinary.
+     * Должен вывести вернуть false, т.к. дерево не бинарное.
+     */
+    @Test
+    public void shouldBeNotBinaryTree() {
+        MultiPathTree<Integer> binaryTree = new MultiPathTree<>(1);
+        binaryTree.add(1, 2);
+        binaryTree.add(1, 3);
+        binaryTree.add(2, 4);
+        binaryTree.add(2, 5);
+        binaryTree.add(3, 6);
+        binaryTree.add(3, 7);
+        binaryTree.add(3, 8);
+        assertThat(binaryTree.isBinary(), is(false));
+    }
 }

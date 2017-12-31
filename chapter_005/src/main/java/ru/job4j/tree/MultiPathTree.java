@@ -67,7 +67,26 @@ public class MultiPathTree<T extends Comparable<T>> implements SimpleTree<T> {
         return result;
     }
 
-
+    /**
+     * Метод для определения бинарности дерева.
+     * @return бинарно ли дерево.
+     */
+    public boolean isBinary() {
+        boolean isBinary = true;
+        Queue<Node<T>> data = new LinkedList<>();
+        data.offer(root);
+        while (!data.isEmpty()) {
+            Node<T> el = data.poll();
+            if (el.leaves().size() > 2) {
+                isBinary = false;
+                break;
+            }
+            for (Node<T> child : el.leaves()) {
+                data.offer(child);
+            }
+        }
+        return isBinary;
+    }
 
     /**
      * Метод для получения итератора дерева.
