@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -33,12 +32,16 @@ public class BinaryTreeTest {
     @Before
     public void setUp() {
         bt = new BinaryTree<>();
-        for (int i = 0; i < 3; i++) {
-            bt.add(i + 1);
-        }
-        for (int i = 0; i < 3; i++) {
-            bt.add(i + 1);
-        }
+        bt.add(50);
+        bt.add(70);
+        bt.add(30);
+        bt.add(20);
+        bt.add(40);
+        bt.add(80);
+        bt.add(60);
+        bt.add(70);
+        bt.add(100);
+        bt.add(100);
         it = bt.iterator();
     }
 
@@ -47,10 +50,15 @@ public class BinaryTreeTest {
      * Методы должны найти и удалить элементы.
      */
     @Test
-    public void whenRemoveElementsThenArrayHasntTheseElements() {
-        for (int i = 0; i < 3; i++) {
-            assertThat(bt.find(i + 1).getValue(), is(i + 1));
-        }
+    public void whenFindElementsThenTreeHasTheseElements() {
+        assertThat(bt.find(50).getValue(), is(50));
+        assertThat(bt.find(70).getValue(), is(70));
+        assertThat(bt.find(30).getValue(), is(30));
+        assertThat(bt.find(20).getValue(), is(20));
+        assertThat(bt.find(40).getValue(), is(40));
+        assertThat(bt.find(80).getValue(), is(80));
+        assertThat(bt.find(60).getValue(), is(60));
+        assertThat(bt.find(100).getValue(), is(100));
     }
 
     /**
@@ -58,37 +66,35 @@ public class BinaryTreeTest {
      * Должен пройти все проверки.
      */
     @Test
-    public void shouldReturnExceptionAfterPassedTests() {
+    public void shouldPassAllTests() {
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(50));
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(2));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(30));
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(3));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(70));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(20));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(40));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(60));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(80));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(100));
         assertThat(it.hasNext(), is(false));
-        assertThat(it.hasNext(), is(false));
-    }
-
-    /**
-     * Тест для методов add и next.
-     * Метод должен добавить элементы, вывести ожидаемый элемент и выкинуть исключения отсутствия элемента.
-     */
-    @Test (expected = NoSuchElementException.class)
-    public void whenAddElementsThenArrayHasTheseElements() {
-        for (int i = 3; i < 20; i++) {
-            bt.add(i + 1);
-        }
-        int i = 1;
-        while (it.hasNext()) {
-            assertThat(it.next(), is(i++));
-        }
-        it.next();
     }
 }

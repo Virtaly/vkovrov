@@ -1,7 +1,9 @@
 package ru.job4j.tree;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * Класс для описания бинарного дерева.
@@ -80,23 +82,56 @@ public class BinaryTree<T extends Comparable<T>> implements Iterable<T> {
         return new Iterator<T>() {
 
             /**
-             * Поле для текущего элемента.
+             * Список для хранения всех узлов.
              */
-            private BinaryNode<T> current = root;
+            private List<BinaryNode<T>> nodes = fillNodesList(root);
 
-            @Override
-            public boolean hasNext() {
-                return current != null;
+            /**
+             * Указатель на текущий узел.
+             */
+            private int current = 0;
+
+            /**
+             * Метод для заполнения списка узлами.
+             * @param node корневой узел, с которого начинается заполнение списка узлами.
+             * @return список с узлами.
+             */
+            private List<BinaryNode<T>> fillNodesList(BinaryNode<T> node) {
+                List<BinaryNode<T>> list = new LinkedList<>();
+                Queue<BinaryNode<T>> data = new LinkedList<>();
+                data.offer(node);
+                while (!data.isEmpty()) {
+                    BinaryNode<T> el = data.poll();
+                    list.add(el);
+                    if (el.leftChild != null) {
+                        data.offer(el.leftChild);
+                    }
+                    if (el.rightChild != null) {
+                        data.offer(el.rightChild);
+                    }
+                }
+                return list;
             }
 
+            /**
+             * Метод для определения наличия следующего элемента в списке.
+             * @return есть ли следующий элемент в списке.
+             */
+            @Override
+            public boolean hasNext() {
+                return current < nodes.size();
+            }
+
+            /**
+             * Метод для возвращения следующего элемента списка.
+             * @return следующий элемент списка.
+             */
             @Override
             public T next() {
                 if (!hasNext()) {
-                    throw new NoSuchElementException();
+                    throw new IllegalArgumentException();
                 }
-                T result = current.getValue();
-                current = current.leftChild != null ? current.leftChild : current.rightChild;
-                return result;
+                return nodes.get(current++).getValue();
             }
         };
     }
