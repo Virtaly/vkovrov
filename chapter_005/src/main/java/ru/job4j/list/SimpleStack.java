@@ -26,7 +26,7 @@ public class SimpleStack<T> {
      * @return последний элемент.
      */
     public T poll() {
-        return stack.remove(stack.getLast());
+        return stack.remove(stack.getLast().getData());
     }
 
     /**

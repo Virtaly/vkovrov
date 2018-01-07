@@ -26,7 +26,7 @@ public class SimpleQueue<T> {
      * @return первый элемент.
      */
     public T poll() {
-        return queue.remove(queue.getFirst());
+        return queue.remove(queue.getFirst().getData());
     }
 
     /**
