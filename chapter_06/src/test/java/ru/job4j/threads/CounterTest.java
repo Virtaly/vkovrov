@@ -29,9 +29,7 @@ public class CounterTest {
      */
     @Test
     public void whenCountWordsAndSpacesThenCountParallel() {
-        System.out.println("start");
         parallelCounter.count("Lorem ipsum dolor sit amet, consectetur adipiscing elit");
-        System.out.println("finish");
     }
 
 }
