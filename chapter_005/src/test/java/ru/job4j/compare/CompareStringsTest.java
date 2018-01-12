@@ -39,4 +39,17 @@ public class CompareStringsTest {
         s1 = "programmin";
         assertThat(cs.compare(s1, s2), is(false));
     }
+
+    /**
+     * Тест для метода compareStable.
+     * Должен вернуть true, если слова состоят из одинаковых букв.
+     */
+    @Test
+    public void whenStringsContainSimilarCharsThenTrueForStableMethod() {
+        String s1 = "Programming";
+        String s2 = "mignrgamroP";
+        assertThat(cs.compareStable(s1, s2), is(true));
+        s1 = "programming";
+        assertThat(cs.compareStable(s1, s2), is(false));
+    }
 }

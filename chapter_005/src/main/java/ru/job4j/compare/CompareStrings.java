@@ -1,5 +1,7 @@
 package ru.job4j.compare;
 
+import java.util.TreeSet;
+
 /**
  * Класс для определения состоят ли строки из одинаковых букв.
  * @author vkovrov
@@ -16,6 +18,24 @@ public class CompareStrings {
      */
     public boolean compare(String s1, String s2) {
         return this.getHash(s1) == this.getHash(s2);
+    }
+
+    /**
+     * Метод для определения состоят ли строки из одинаковых букв, стабильный.
+     * @param s1 первая строка.
+     * @param s2 вторая строка.
+     * @return true, если строки состоят из одинаковых букв.
+     */
+    public boolean compareStable(String s1, String s2) {
+        TreeSet<Character> charTreeFirst = new TreeSet<>();
+        TreeSet<Character> charTreeSecond = new TreeSet<>();
+        for (int i = 0; i < s1.length(); i++) {
+            charTreeFirst.add(s1.charAt(i));
+        }
+        for (int i = 0; i < s2.length(); i++) {
+            charTreeSecond.add(s2.charAt(i));
+        }
+        return charTreeFirst.size() == charTreeSecond.size() && charTreeFirst.containsAll(charTreeSecond);
     }
 
     /**
