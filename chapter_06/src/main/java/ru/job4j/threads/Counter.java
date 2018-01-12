@@ -26,11 +26,6 @@ public class Counter {
             System.out.println("Пробелов в строке: " + spaceCounter);
         });
         t1.start();
-        try {
-            t1.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         Thread t2 = new Thread(() -> {
             int wordCounter = 0;
             StringTokenizer st = new StringTokenizer(s);
@@ -42,6 +37,7 @@ public class Counter {
         });
         t2.start();
         try {
+            t1.join();
             t2.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
