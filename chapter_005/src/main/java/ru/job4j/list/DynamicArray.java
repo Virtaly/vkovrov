@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Класс для описания динамического массива.
@@ -12,16 +14,19 @@ import java.util.NoSuchElementException;
  * @since 0.1
  * @param <E> тип хранимых в контейнере объектов.
  */
+@ThreadSafe
 public class DynamicArray<E> implements Iterable<E> {
 
     /**
      * Поле для массива.
      */
+    @GuardedBy("this")
     private Object[] container;
 
     /**
      * Указатель на следующую свободную ячейку.
      */
+    @GuardedBy("this")
     private int pointer = 0;
 
     /**
@@ -43,7 +48,7 @@ public class DynamicArray<E> implements Iterable<E> {
      * Метод для добавления элемента в контейнер.
      * @param value элемент.
      */
-    public void add(E value) {
+    public synchronized void add(E value) {
         if (pointer >= container.length) {
             container = Arrays.copyOf(container, container.length * 2);
         }
@@ -55,7 +60,7 @@ public class DynamicArray<E> implements Iterable<E> {
      * @param index индекс элемента.
      * @return элемент контейнера.
      */
-    public E get(int index) {
+    public synchronized E get(int index) {
         if (index >= pointer) {
             throw new NoSuchElementException();
         }
@@ -67,12 +72,13 @@ public class DynamicArray<E> implements Iterable<E> {
      * @return итератор.
      */
     @Override
-    public Iterator<E> iterator() {
+    public synchronized Iterator<E> iterator() {
         return new Iterator<E>() {
 
             /**
              * Поле для индекса.
              */
+            @GuardedBy("this")
             private int index = 0;
 
             /**
@@ -80,7 +86,7 @@ public class DynamicArray<E> implements Iterable<E> {
              * @return есть ли следующий элемент в массиве.
              */
             @Override
-            public boolean hasNext() {
+            public synchronized boolean hasNext() {
                 return index < pointer;
             }
 
@@ -89,7 +95,7 @@ public class DynamicArray<E> implements Iterable<E> {
              * @return следующий элемент массива.
              */
             @Override
-            public E next() {
+            public synchronized E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }

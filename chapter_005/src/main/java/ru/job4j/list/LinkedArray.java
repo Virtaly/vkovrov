@@ -3,6 +3,8 @@ package ru.job4j.list;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
 
 /**
  * Класс для описания связного массива.
@@ -11,28 +13,32 @@ import java.util.NoSuchElementException;
  * @since 0.1
  * @param <E> тип хранимых в контейнере объектов.
  */
+@ThreadSafe
 public class LinkedArray<E> implements Iterable<E> {
 
     /**
      * Поле для первого узла.
      */
+    @GuardedBy("this")
     private Node<E> first;
 
     /**
      * Поле для последнего узла.
      */
+    @GuardedBy("this")
     private Node<E> last;
 
     /**
      * Поле для размера списка.
      */
+    @GuardedBy("this")
     private int size = 0;
 
     /**
      * Метод для добавления элемента в контейнер.
      * @param value элемент.
      */
-    public void add(E value) {
+    public synchronized void add(E value) {
         Node<E> newNode = new Node<>(last, value, null);
         if (last == null) {
             first = newNode;
@@ -48,7 +54,7 @@ public class LinkedArray<E> implements Iterable<E> {
      * @param e значение элемента.
      * @return есть ли элемент в контейнере.
      */
-    public boolean contains(E e) {
+    public synchronized boolean contains(E e) {
         boolean arrayContainsE = false;
         Node<E> newNode = first;
         while (newNode != null) {
@@ -66,7 +72,7 @@ public class LinkedArray<E> implements Iterable<E> {
      * @param item элемент.
      * @return узел элемента контейнера.
      */
-    public Node<E> getNode(E item) {
+    public synchronized Node<E> getNode(E item) {
         Node<E> node = first;
         Node<E> result = null;
         while (node != null) {
@@ -84,7 +90,7 @@ public class LinkedArray<E> implements Iterable<E> {
      * @param index индекс элемента.
      * @return элемент контейнера.
      */
-    public E get(int index) {
+    public synchronized E get(int index) {
         if (index >= size) {
             throw new IllegalArgumentException();
         }
@@ -99,7 +105,7 @@ public class LinkedArray<E> implements Iterable<E> {
      * Метод для получения первого элемента из контейнера.
      * @return первый элемент контейнера.
      */
-    public Node<E> getFirst() {
+    public synchronized Node<E> getFirst() {
         return this.first;
     }
 
@@ -107,7 +113,7 @@ public class LinkedArray<E> implements Iterable<E> {
      * Метод для получения последнего элемента из контейнера.
      * @return последний элемент контейнера.
      */
-    public Node<E> getLast() {
+    public synchronized Node<E> getLast() {
         return this.last;
     }
 
@@ -116,7 +122,7 @@ public class LinkedArray<E> implements Iterable<E> {
      * @param item значение элемента.
      * @return значение элемента.
      */
-    public E remove(E item) {
+    public synchronized E remove(E item) {
         Node<E> node = this.getNode(item);
         if (node == first) {
             removeFirst(item);
@@ -135,7 +141,7 @@ public class LinkedArray<E> implements Iterable<E> {
      * @param item значение первого элемента.
      * @return значение первого элемента.
      */
-    private E removeFirst(E item) {
+    private synchronized E removeFirst(E item) {
         Node<E> node = this.getNode(item);
         if (node.getNext() != null) {
             node.getNext().setPrevious(null);
@@ -149,7 +155,7 @@ public class LinkedArray<E> implements Iterable<E> {
      * @param item значение последнего элемента.
      * @return значение последнего элемента.
      */
-    private E removeLast(E item) {
+    private synchronized E removeLast(E item) {
         Node<E> node = this.getNode(item);
         if (node.getPrevious() != null) {
             node.getPrevious().setNext(null);
@@ -163,12 +169,13 @@ public class LinkedArray<E> implements Iterable<E> {
      * @return итератор.
      */
     @Override
-    public Iterator<E> iterator() {
+    public synchronized Iterator<E> iterator() {
         return new Iterator<E>() {
 
             /**
              * Текущий узел.
              */
+            @GuardedBy("this")
             private Node<E> current = first;
 
             /**
@@ -176,7 +183,7 @@ public class LinkedArray<E> implements Iterable<E> {
              * @return есть ли следующий элемент в массиве.
              */
             @Override
-            public boolean hasNext() {
+            public synchronized boolean hasNext() {
                 return current != null;
             }
 
@@ -185,7 +192,7 @@ public class LinkedArray<E> implements Iterable<E> {
              * @return следующий элемент массива.
              */
             @Override
-            public E next() {
+            public synchronized E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
@@ -203,21 +210,25 @@ public class LinkedArray<E> implements Iterable<E> {
      * @since 0.1
      * @param <T> тип хранимого в узле объекта.
      */
+    @ThreadSafe
     public class Node<T> {
 
         /**
          * Поле для предыдущего узла.
          */
+        @GuardedBy("this")
         private Node<T> previous;
 
         /**
          * Поле для данных, хранимых в узле.
          */
+        @GuardedBy("this")
         private T data;
 
         /**
          * Поле для следующего узла.
          */
+        @GuardedBy("this")
         private Node<T> next;
 
         /**
@@ -236,7 +247,7 @@ public class LinkedArray<E> implements Iterable<E> {
          * Геттер для предыдущего узла.
          * @return предыдущий узел.
          */
-        public Node<T> getPrevious() {
+        public synchronized Node<T> getPrevious() {
             return previous;
         }
 
@@ -244,7 +255,7 @@ public class LinkedArray<E> implements Iterable<E> {
          * Cеттер для предыдущего узла.
          * @param previous предыдущий узел.
          */
-        public void setPrevious(Node<T> previous) {
+        public synchronized void setPrevious(Node<T> previous) {
             this.previous = previous;
         }
 
@@ -252,7 +263,7 @@ public class LinkedArray<E> implements Iterable<E> {
          * Геттер для данных, хранимых в узле.
          * @return данные, хранимые в узле.
          */
-        public T getData() {
+        public synchronized T getData() {
             return data;
         }
 
@@ -260,7 +271,7 @@ public class LinkedArray<E> implements Iterable<E> {
          * Cеттер для данных, хранимых в узле.
          * @param data данные, хранимые в узле.
          */
-        public void setData(T data) {
+        public synchronized void setData(T data) {
             this.data = data;
         }
 
@@ -268,7 +279,7 @@ public class LinkedArray<E> implements Iterable<E> {
          * Геттер для следующего узла.
          * @return следующий узел.
          */
-        public Node<T> getNext() {
+        public synchronized Node<T> getNext() {
             return next;
         }
 
@@ -276,7 +287,7 @@ public class LinkedArray<E> implements Iterable<E> {
          * Cеттер для следующего узла.
          * @param next следующий узел.
          */
-        public void setNext(Node<T> next) {
+        public synchronized void setNext(Node<T> next) {
             this.next = next;
         }
     }
