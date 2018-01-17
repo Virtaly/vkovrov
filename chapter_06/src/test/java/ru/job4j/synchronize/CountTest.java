@@ -10,13 +10,30 @@ import org.junit.Test;
  */
 public class CountTest {
 
+    /**
+     * Класс для потока увеличения счетчика.
+     * @author vkovrov
+     * @version 0.1
+     * @since 0.1
+     */
     private class CountThread extends Thread {
+
+        /**
+         * Поле для счетчика.
+         */
         private final Count counter;
 
+        /**
+         * Конструктор класса.
+         * @param counter счетчик.
+         */
         private CountThread(Count counter) {
             this.counter = counter;
         }
 
+        /**
+         * Метод для запуска потока на выполнение.
+         */
         @Override
         public void run() {
             this.counter.increment();
