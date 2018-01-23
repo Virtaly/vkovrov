@@ -10,7 +10,7 @@ import java.util.List;
  * @since 0.1
  * @param <T> тип хранимых данных.
  */
-public class FixedQueue<T> {
+public class FixedBlockingQueue<T> {
 
     /**
      * Поле для структуры данных, используемой для хранения данных очереди.
@@ -18,38 +18,36 @@ public class FixedQueue<T> {
     private List<T> list = new LinkedList<>();
 
     /**
-     * Количество элементов в структуре данных.
-     */
-    private int size = 0;
-
-    /**
      * Метод для добавления данных в конец очереди.
-     * @throws ArrayIndexOutOfBoundsException исключение переполнения очереди.
      * @param value значение данных.
+     * @throws InterruptedException исключение прерывания потока.
      */
-    public void push(T value) {
-        if (size < 10) {
-            list.add(value);
-            size++;
-        } else {
-            throw new ArrayIndexOutOfBoundsException();
+    public synchronized void push(T value) throws InterruptedException {
+        while (list.size() == 10) {
+            wait();
         }
+        if (list.size() < 10) {
+            notify();
+        }
+        list.add(value);
+        System.out.println(this.toString());
     }
 
     /**
      * Метод для извлечения данных из начала очереди.
-     * @throws ArrayIndexOutOfBoundsException исключение пустой очереди.
+     * @throws InterruptedException исключение прерывания потока.
      * @return извлекаемое значение.
      */
-    public T poll() {
-        T value;
-        if (size > 0) {
-            value = list.remove(0);
-            size--;
-        } else {
-            throw new ArrayIndexOutOfBoundsException();
+    public synchronized T poll() throws InterruptedException {
+        while (list.size() == 0) {
+            wait();
         }
-        return value;
+        if (list.size() < 10) {
+            notify();
+        }
+        T t = list.remove(0);
+        System.out.println(this.toString());
+        return t;
     }
 
     /**
