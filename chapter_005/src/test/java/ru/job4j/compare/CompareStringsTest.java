@@ -49,7 +49,7 @@ public class CompareStringsTest {
         String s1 = "Programming";
         String s2 = "mignrgamroP";
         assertThat(cs.compareStable(s1, s2), is(true));
-        s1 = "programming";
+        s1 = "Programmin";
         assertThat(cs.compareStable(s1, s2), is(false));
     }
 }

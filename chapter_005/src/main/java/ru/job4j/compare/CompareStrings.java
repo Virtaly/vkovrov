@@ -1,6 +1,7 @@
 package ru.job4j.compare;
 
-import java.util.TreeSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Класс для определения состоят ли строки из одинаковых букв.
@@ -27,15 +28,29 @@ public class CompareStrings {
      * @return true, если строки состоят из одинаковых букв.
      */
     public boolean compareStable(String s1, String s2) {
-        TreeSet<Character> charTreeFirst = new TreeSet<>();
-        TreeSet<Character> charTreeSecond = new TreeSet<>();
+        Map<Character, Integer> charMap = new HashMap<>();
+        boolean charNotFound = false;
         for (int i = 0; i < s1.length(); i++) {
-            charTreeFirst.add(s1.charAt(i));
+            int charCount = 1;
+            if (charMap.containsKey(s1.charAt(i))) {
+                charCount = charMap.get(s1.charAt(i)) + 1;
+            }
+            charMap.put(s1.charAt(i), charCount);
         }
         for (int i = 0; i < s2.length(); i++) {
-            charTreeSecond.add(s2.charAt(i));
+            Integer charCount = charMap.get(s2.charAt(i));
+            if (charCount == null) {
+                charNotFound = true;
+                break;
+            }
+            if (charCount > 1) {
+                charCount--;
+                charMap.put(s2.charAt(i), charCount);
+            } else {
+                charMap.remove(s2.charAt(i));
+            }
         }
-        return charTreeFirst.size() == charTreeSecond.size() && charTreeFirst.containsAll(charTreeSecond);
+        return !charNotFound && charMap.isEmpty();
     }
 
     /**
