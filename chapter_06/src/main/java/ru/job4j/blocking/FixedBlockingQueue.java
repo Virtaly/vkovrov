@@ -26,9 +26,7 @@ public class FixedBlockingQueue<T> {
         while (list.size() == 10) {
             wait();
         }
-        if (list.size() < 10) {
-            notify();
-        }
+        notify();
         list.add(value);
         System.out.println(this.toString());
     }
@@ -42,9 +40,7 @@ public class FixedBlockingQueue<T> {
         while (list.size() == 0) {
             wait();
         }
-        if (list.size() < 10) {
-            notify();
-        }
+        notify();
         T t = list.remove(0);
         System.out.println(this.toString());
         return t;
