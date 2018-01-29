@@ -18,12 +18,33 @@ public class FixedBlockingQueue<T> {
     private List<T> list = new LinkedList<>();
 
     /**
+     * Поле для ограничения размера хранилища.
+     */
+    private int sizeLimit;
+
+    /**
+     * Конструктор класса.
+     * @param limit максимальный размер массива.
+     */
+    public FixedBlockingQueue(int limit) {
+        this.sizeLimit = limit;
+    }
+
+    /**
+     * Геттер для текущего количества элементов в хранилище.
+     * @return текущее количество элементов.
+     */
+    public int getSize() {
+        return this.list.size();
+    }
+
+    /**
      * Метод для добавления данных в конец очереди.
      * @param value значение данных.
      * @throws InterruptedException исключение прерывания потока.
      */
     public synchronized void push(T value) throws InterruptedException {
-        while (list.size() == 10) {
+        while (list.size() == this.sizeLimit) {
             wait();
         }
         notify();

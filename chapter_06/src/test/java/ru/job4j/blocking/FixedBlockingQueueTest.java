@@ -21,7 +21,7 @@ public class FixedBlockingQueueTest {
      */
     @Before
     public void setUp() {
-        this.fbq = new FixedBlockingQueue();
+        this.fbq = new FixedBlockingQueue(10);
     }
 
     /**
