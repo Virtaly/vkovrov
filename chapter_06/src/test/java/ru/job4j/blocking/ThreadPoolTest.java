@@ -64,6 +64,7 @@ public class ThreadPoolTest {
      */
     @Test
     public void whenQueueHasWorkRunnersThenThreadPoolWillExecuteAllOfThem() {
+        threadPool.startThreadPool();
         for (int i = 0; i < 100; i++) {
             threadPool.add(new WorkRunner(i));
         }

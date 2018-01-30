@@ -20,7 +20,7 @@ public class FixedBlockingQueue<T> {
     /**
      * Поле для ограничения размера хранилища.
      */
-    private int sizeLimit;
+    private final int sizeLimit;
 
     /**
      * Конструктор класса.
@@ -34,7 +34,7 @@ public class FixedBlockingQueue<T> {
      * Геттер для текущего количества элементов в хранилище.
      * @return текущее количество элементов.
      */
-    public int getSize() {
+    public synchronized int getSize() {
         return this.list.size();
     }
 
@@ -47,7 +47,7 @@ public class FixedBlockingQueue<T> {
         while (list.size() == this.sizeLimit) {
             wait();
         }
-        notify();
+        notifyAll();
         list.add(value);
         System.out.println(this.toString());
     }
@@ -61,7 +61,7 @@ public class FixedBlockingQueue<T> {
         while (list.size() == 0) {
             wait();
         }
-        notify();
+        notifyAll();
         T t = list.remove(0);
         System.out.println(this.toString());
         return t;
@@ -72,7 +72,7 @@ public class FixedBlockingQueue<T> {
      * @return строковое представление очереди.
      */
     @Override
-    public String toString() {
+    public synchronized String toString() {
         StringBuilder builder = new StringBuilder();
         for (T t : list) {
             builder.append(t);
