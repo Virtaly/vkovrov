@@ -33,7 +33,7 @@ public class SimpleLock {
     public synchronized void unlock() {
         if (isLockedBy == Thread.currentThread()) {
             isLockedBy = null;
-            notify();
+            notifyAll();
         }
     }
 }
