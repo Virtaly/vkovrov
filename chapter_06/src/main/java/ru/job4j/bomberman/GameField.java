@@ -43,19 +43,21 @@ public class GameField {
      * @param y координата ячейки по оси ординат.
      * @return true, если получилось занять ячейку.
      */
-    public synchronized boolean lockCell(int x, int y) {
-        boolean isLocked = false;
-        try {
-            isLocked = board[x][y].tryLock(500, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public boolean lockCell(int x, int y) {
+        synchronized (board[x][y]) {
+            boolean isLocked = false;
+            try {
+                isLocked = board[x][y].tryLock(500, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (isLocked) {
+                System.out.println(String.format("Cell %s x %s is locked by %s thread", x, y, Thread.currentThread().getName()));
+            } else {
+                System.out.println(String.format("Cell %s x %s is not locked by %s thread", x, y, Thread.currentThread().getName()));
+            }
+            return isLocked;
         }
-        if (isLocked) {
-            System.out.println(String.format("Cell %s x %s is locked by %s thread", x, y, Thread.currentThread().getName()));
-        } else {
-            System.out.println(String.format("Cell %s x %s is not locked by %s thread", x, y, Thread.currentThread().getName()));
-        }
-        return isLocked;
     }
 
     /**
@@ -79,8 +81,10 @@ public class GameField {
      * @param x координата ячейки по оси абсцисс.
      * @param y координата ячейки по оси ординат.
      */
-    public synchronized void unlockCell(int x, int y) {
-        board[x][y].unlock();
-        System.out.println(String.format("Cell %s x %s is unlocked by %s thread", x, y, Thread.currentThread().getName()));
+    public void unlockCell(int x, int y) {
+        synchronized (board[x][y]) {
+            board[x][y].unlock();
+            System.out.println(String.format("Cell %s x %s is unlocked by %s thread", x, y, Thread.currentThread().getName()));
+        }
     }
 }
