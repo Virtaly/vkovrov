@@ -44,20 +44,18 @@ public class GameField {
      * @return true, если получилось занять ячейку.
      */
     public boolean lockCell(int x, int y) {
-        synchronized (board[x][y]) {
-            boolean isLocked = false;
-            try {
-                isLocked = board[x][y].tryLock(500, TimeUnit.MILLISECONDS);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (isLocked) {
-                System.out.println(String.format("Cell %s x %s is locked by %s thread", x, y, Thread.currentThread().getName()));
-            } else {
-                System.out.println(String.format("Cell %s x %s is not locked by %s thread", x, y, Thread.currentThread().getName()));
-            }
-            return isLocked;
+        boolean isLocked = false;
+        try {
+            isLocked = board[x][y].tryLock(500, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        if (isLocked) {
+            System.out.println(String.format("Cell %s x %s is locked by %s thread", x, y, Thread.currentThread().getName()));
+        } else {
+            System.out.println(String.format("Cell %s x %s is not locked by %s thread", x, y, Thread.currentThread().getName()));
+        }
+        return isLocked;
     }
 
     /**
